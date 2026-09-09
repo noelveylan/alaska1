@@ -1,0 +1,11 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.tmp
+
+# stray local git backups
+.git.*.backup
+.git.alaska-backup/
+
+# Vercel
+.vercel
