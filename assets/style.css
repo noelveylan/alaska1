@@ -1,126 +1,227 @@
 /* ============================================================
    Alaska by Land & Sea -- bonus pack site stylesheet
-   Shares the book's palette (cream/ink) and type pairing
-   (Gelasio serif body, Archivo sans display) so the free
-   companion site reads as the same product as the paperback.
+   Dark, cinematic palette pulled straight from the book cover:
+   deep-navy ground, cream text, amber-gold accent, bold Archivo
+   display over a Gelasio serif body, so the free companion site
+   reads as the same product as the 2027 paperback.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,700;1,400&family=Archivo:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Gelasio:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root{
-  --cream:#F7F3EA;
-  --ink:#141414;
-  --ink-soft:#3a3a3a;
-  --line:#d8cdb6;
-  --accent:#8a3b2b;      /* warm terracotta, echoes the color-map roads */
-  --accent-ink:#1c2b3a;  /* deep navy, echoes the color-map ink */
-  --panel:#fff;
-  --max:920px;
+  --navy-900:#0a1b29;   /* page ground */
+  --navy-850:#0d2233;   /* footer, notices */
+  --navy-800:#102a3f;   /* hero top, table head */
+  --navy-700:#163449;   /* cards */
+  --line:#284b64;       /* hairlines / borders */
+
+  --cream:#f5f1e6;      /* headings, emphasis */
+  --text:#dbe4ea;       /* body copy */
+  --text-dim:#9fb1bf;   /* secondary copy */
+
+  --gold:#e7a325;       /* accent (the cover's "BY LAND & SEA") */
+  --gold-bright:#f6c657;
+  --gold-deep:#c9861a;
+
+  --max:960px;
+  --radius:5px;
 }
 
-*{box-sizing:border-box;}
-html{background:var(--cream);}
+*{ box-sizing:border-box; }
+html{ background:var(--navy-900); scroll-behavior:smooth; }
 body{
-  margin:0; background:var(--cream); color:var(--ink);
-  font-family:'Gelasio', Georgia, serif; font-size:17px; line-height:1.6;
+  margin:0; background:var(--navy-900); color:var(--text);
+  font-family:'Gelasio', Georgia, serif; font-size:17px; line-height:1.7;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
-h1,h2,h3,.tab,.eyebrow,nav,.btn,.chip{ font-family:'Archivo', system-ui, sans-serif; }
+h1,h2,h3,h4,.eyebrow,nav.site a,.btn,.chip,.brand,th,
+.mapcard .cap .tag,.callout .lab,.tl-when{
+  font-family:'Archivo', system-ui, -apple-system, sans-serif;
+}
 
-a{ color:var(--accent-ink); }
-a:hover{ color:var(--accent); }
+::selection{ background:var(--gold); color:var(--navy-900); }
 
-img{max-width:100%; height:auto; display:block;}
+a{ color:var(--gold-bright); text-decoration:none; }
+a:hover{ color:var(--gold); }
+main a{ text-decoration:underline; text-underline-offset:2px; text-decoration-color:rgba(231,163,37,.45); }
+main a:hover{ text-decoration-color:var(--gold); }
+.hero p.lead a{ text-decoration:underline; text-underline-offset:2px; text-decoration-color:rgba(231,163,37,.45); }
+.card a,.mapcard a,a.art{ text-decoration:none; }
+
+img{ max-width:100%; height:auto; display:block; }
 
 .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
 
-/* ---- top bar ---- */
-header.site{ border-bottom:2px solid var(--ink); background:var(--cream); }
-header.site .wrap{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; gap:16px; flex-wrap:wrap; }
-.brand{ font-family:'Archivo'; font-weight:800; letter-spacing:.02em; font-size:1.05rem; text-decoration:none; color:var(--ink); }
-.brand small{ display:block; font-family:'Archivo'; font-weight:600; letter-spacing:.18em; text-transform:uppercase; font-size:.62rem; color:var(--ink-soft); margin-top:2px; }
-nav.site{ display:flex; gap:18px; flex-wrap:wrap; }
-nav.site a{ font-weight:700; font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; text-decoration:none; color:var(--ink); border-bottom:2px solid transparent; padding-bottom:2px; }
-nav.site a:hover, nav.site a.active{ border-bottom-color:var(--accent); }
+/* ---- header ---- */
+header.site{
+  position:sticky; top:0; z-index:20;
+  background:rgba(10,27,41,.85); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+header.site .wrap{ display:flex; align-items:center; justify-content:space-between; gap:14px 28px; padding:16px 24px; flex-wrap:wrap; }
+.brand{ font-weight:900; letter-spacing:.01em; font-size:1rem; line-height:1.15; color:var(--cream); text-transform:uppercase; text-decoration:none; }
+.brand small{ display:block; font-weight:600; letter-spacing:.2em; text-transform:uppercase; font-size:.57rem; color:var(--gold); margin-top:4px; }
+nav.site{ display:flex; gap:20px; flex-wrap:wrap; }
+nav.site a{ font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; text-decoration:none; color:var(--text-dim); padding-bottom:3px; border-bottom:2px solid transparent; }
+nav.site a:hover{ color:var(--cream); }
+nav.site a.active{ color:var(--cream); border-bottom-color:var(--gold); }
 
 /* ---- hero ---- */
-.hero{ padding:56px 0 40px; border-bottom:1px solid var(--line); }
-.eyebrow{ display:inline-block; font-weight:700; text-transform:uppercase; letter-spacing:.22em; font-size:.72rem; border:1.4px solid var(--ink); padding:4px 11px; margin-bottom:18px; }
-.hero h1{ font-size:2.3rem; line-height:1.08; margin:0 0 14px; max-width:16ch; }
-.hero p.lead{ font-size:1.15rem; max-width:60ch; color:var(--ink-soft); }
-.hero-actions{ margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; }
+.hero{
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
+  border-bottom:1px solid var(--line);
+  padding:64px 0 52px;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(60% 80% at 88% -15%, rgba(231,163,37,.18), transparent 60%),
+    radial-gradient(55% 75% at 0% 115%, rgba(46,124,142,.24), transparent 60%);
+}
+.hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+  background:linear-gradient(90deg, var(--gold), transparent 72%);
+}
+.hero .wrap{ position:relative; }
+.home .hero{ padding:88px 0 68px; }
+.eyebrow{
+  display:inline-block; font-weight:700; text-transform:uppercase; letter-spacing:.22em;
+  font-size:.66rem; color:var(--gold); border:1px solid var(--gold); padding:5px 12px; margin-bottom:20px;
+}
+.hero h1{
+  font-weight:900; font-size:2.6rem; line-height:1.05; letter-spacing:-.015em;
+  margin:0 0 16px; max-width:20ch; color:var(--cream);
+}
+.home .hero h1{ font-size:3rem; }
+.hero p.lead{ font-size:1.16rem; line-height:1.6; max-width:62ch; color:var(--text); }
+.hero-actions{ margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; }
 
 /* ---- buttons / chips ---- */
-.btn{ display:inline-block; font-weight:700; font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; text-decoration:none;
-  padding:11px 20px; border:1.6px solid var(--ink); color:var(--ink); background:transparent; }
-.btn:hover{ background:var(--ink); color:var(--cream); }
-.btn.solid{ background:var(--ink); color:var(--cream); }
-.btn.solid:hover{ background:var(--accent-ink); }
-.chip{ display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
-  background:var(--ink); color:var(--cream); padding:3px 9px; }
-
-/* ---- section / cards ---- */
-main{ padding:44px 0 80px; }
-section.block{ margin-bottom:52px; }
-h2.h{ font-size:1.5rem; border-bottom:2px solid var(--ink); padding-bottom:8px; margin:0 0 20px; }
-h3.h{ font-family:'Archivo'; font-weight:700; font-size:1.05rem; margin:26px 0 8px; }
-.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:18px; }
-.card{ background:var(--panel); border:1px solid var(--line); padding:18px; }
-.card h4{ font-family:'Archivo'; font-size:.95rem; margin:0 0 6px; }
-.card p{ margin:0; font-size:.92rem; color:var(--ink-soft); }
-
-/* map cards */
-.mapcard{ background:var(--panel); border:1px solid var(--line); }
-.mapcard .art{ border-bottom:1px solid var(--line); background:#eaf3f8; }
-.mapcard .cap{ padding:12px 14px; }
-.mapcard .cap .tag{ font-family:'Archivo'; font-weight:700; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-ink); }
-.mapcard .cap h4{ font-family:'Archivo'; font-size:.95rem; margin:4px 0 6px; }
-.mapcard .cap p{ margin:0 0 10px; font-size:.86rem; color:var(--ink-soft); }
-.mapcard .cap a{ font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
-
-/* tables */
-table{ width:100%; border-collapse:collapse; margin:10px 0 8px; font-size:.94rem; }
-th,td{ text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
-th{ font-family:'Archivo'; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); border-bottom:2px solid var(--ink); }
-tr:last-child td{ border-bottom:1px solid var(--ink); }
-.tblwrap{ overflow-x:auto; }
-
-/* timeline */
-.tl-item{ display:flex; gap:18px; padding:16px 0; border-bottom:1px solid var(--line); }
-.tl-when{ flex:0 0 150px; font-family:'Archivo'; font-weight:800; color:var(--accent-ink); }
-.tl-when small{ display:block; font-weight:600; color:var(--ink-soft); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-top:3px;}
-.tl-what h4{ font-family:'Archivo'; margin:0 0 4px; font-size:1rem; }
-.tl-what p{ margin:0; color:var(--ink-soft); font-size:.92rem; }
-
-/* checklist */
-ul.checklist{ list-style:none; padding:0; margin:0; }
-ul.checklist li{ padding:8px 0 8px 30px; border-bottom:1px solid var(--line); position:relative; font-size:.96rem; }
-ul.checklist li::before{ content:""; position:absolute; left:0; top:11px; width:14px; height:14px; border:1.6px solid var(--ink); }
-
-/* callout, matches the book's black mistake-box */
-.callout{ background:var(--ink); color:var(--cream); padding:16px 18px; margin:18px 0; }
-.callout .lab{ display:block; font-family:'Archivo'; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.68rem; margin-bottom:6px; color:#fff; }
-.callout p{ margin:0; }
-
-/* notice / link-out box */
-.notice{ border:1.4px solid var(--ink); padding:14px 16px; font-size:.9rem; background:var(--panel); }
-.notice.warn{ border-color:var(--accent); }
-
-/* footer */
-footer.site{ border-top:2px solid var(--ink); padding:28px 0 40px; }
-footer.site p{ font-size:.82rem; color:var(--ink-soft); }
-footer.site a{ color:var(--ink-soft); }
-
-/* print */
-@media print{
-  header.site, footer.site, .no-print{ display:none !important; }
-  body{ background:#fff; font-size:12pt; }
-  a{ color:#000; text-decoration:none; }
-  .callout{ border:1.4px solid #000; background:#fff; color:#000; }
-  .callout .lab, .callout p{ color:#000; }
+.btn{
+  display:inline-block; font-weight:800; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em;
+  text-decoration:none; padding:13px 22px; border:1.5px solid var(--gold); color:var(--gold);
+  background:transparent; cursor:pointer; transition:background .15s, color .15s;
+}
+.btn:hover{ background:var(--gold); color:var(--navy-900); }
+.btn.solid{ background:var(--gold); color:var(--navy-900); }
+.btn.solid:hover{ background:var(--gold-bright); }
+.chip{
+  display:inline-block; font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em;
+  background:var(--gold); color:var(--navy-900); padding:4px 10px;
 }
 
-@media (max-width:640px){
-  .hero h1{ font-size:1.8rem; }
-  .tl-item{ flex-direction:column; gap:4px; }
+/* ---- sections ---- */
+main{ padding:56px 0 96px; }
+section.block{ margin-bottom:60px; }
+h2.h{
+  position:relative; font-weight:800; font-size:1.5rem; letter-spacing:-.01em; color:var(--cream);
+  padding-bottom:10px; margin:0 0 22px; border-bottom:1px solid var(--line);
+}
+h2.h::after{ content:""; position:absolute; left:0; bottom:-1px; width:56px; height:3px; background:var(--gold); }
+h3.h{ font-family:'Archivo'; font-weight:700; font-size:1.08rem; color:var(--cream); margin:30px 0 10px; }
+
+/* ---- cards / grid ---- */
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:18px; }
+.card{
+  background:var(--navy-700); border:1px solid var(--line); border-radius:var(--radius); padding:20px;
+  transition:border-color .15s, transform .15s;
+}
+.card:hover{ border-color:var(--gold); transform:translateY(-2px); }
+.card h4{ font-family:'Archivo'; font-weight:700; font-size:1rem; color:var(--cream); margin:0 0 8px; }
+.card p{ margin:0; font-size:.92rem; color:var(--text-dim); }
+.card a{ font-family:'Archivo'; font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+
+/* map cards */
+.mapcard{
+  background:var(--navy-700); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  transition:border-color .15s, transform .15s;
+}
+.mapcard:hover{ border-color:var(--gold); transform:translateY(-2px); }
+.mapcard .art{ display:block; background:#f3f1ea; border-bottom:1px solid var(--line); }
+.mapcard .cap{ padding:14px 16px; }
+.mapcard .cap .tag{ font-weight:800; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+.mapcard .cap h4{ font-family:'Archivo'; font-weight:700; font-size:1rem; color:var(--cream); margin:5px 0 7px; }
+.mapcard .cap p{ margin:0 0 12px; font-size:.86rem; color:var(--text-dim); }
+.mapcard .cap a{ font-family:'Archivo'; font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+
+/* ---- tables ---- */
+.tblwrap{ overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); }
+table{ width:100%; border-collapse:collapse; margin:14px 0 8px; font-size:.93rem; }
+.tblwrap table{ margin:0; }
+th,td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+th{
+  font-weight:800; font-size:.66rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gold);
+  background:var(--navy-800); border-bottom:1px solid var(--gold-deep);
+}
+td{ color:var(--text); }
+td strong{ color:var(--cream); }
+tr:last-child td{ border-bottom:none; }
+table tr:hover td{ background:rgba(231,163,37,.05); }
+
+/* ---- timeline ---- */
+.tl-item{ display:flex; gap:22px; padding:20px 0; border-bottom:1px solid var(--line); }
+.tl-item:first-of-type{ border-top:1px solid var(--line); }
+.tl-when{ flex:0 0 160px; font-weight:800; font-size:.98rem; color:var(--gold); }
+.tl-when small{ display:block; font-weight:600; color:var(--text-dim); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; margin-top:5px; }
+.tl-what h4{ font-family:'Archivo'; font-weight:700; color:var(--cream); margin:0 0 6px; font-size:1.02rem; }
+.tl-what p{ margin:0 0 8px; color:var(--text-dim); font-size:.94rem; }
+.tl-what p:last-child{ margin-bottom:0; }
+
+/* ---- checklist ---- */
+ul.checklist{ list-style:none; padding:0; margin:14px 0; }
+ul.checklist li{ position:relative; padding:11px 0 11px 34px; border-bottom:1px solid var(--line); font-size:.97rem; color:var(--text); }
+ul.checklist li::before{ content:""; position:absolute; left:0; top:14px; width:15px; height:15px; border:1.6px solid var(--gold); border-radius:3px; }
+
+/* ---- callout (the book's black mistake-box, inverted for the dark theme) ---- */
+.callout{
+  background:var(--navy-800); border:1px solid var(--line); border-left:4px solid var(--gold);
+  border-radius:var(--radius); padding:18px 20px; margin:22px 0;
+}
+.callout .lab{ display:block; font-weight:800; text-transform:uppercase; letter-spacing:.14em; font-size:.64rem; color:var(--gold); margin-bottom:8px; }
+.callout p{ margin:0; color:var(--text); }
+
+/* ---- notice / link-out box ---- */
+.notice{ border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; font-size:.9rem; background:var(--navy-850); color:var(--text-dim); }
+.notice strong{ color:var(--cream); }
+.notice.warn{ border-color:var(--gold-deep); background:rgba(231,163,37,.06); }
+
+/* ---- footer ---- */
+footer.site{ border-top:1px solid var(--line); background:var(--navy-850); padding:32px 0 44px; }
+footer.site p{ font-size:.8rem; color:var(--text-dim); margin:0; }
+footer.site a{ color:var(--text-dim); text-decoration:underline; }
+footer.site a:hover{ color:var(--gold); }
+
+/* ---- responsive ---- */
+@media (max-width:720px){
+  .hero{ padding:48px 0 40px; }
+  .home .hero{ padding:56px 0 44px; }
+  .hero h1{ font-size:2rem; }
+  .home .hero h1{ font-size:2.2rem; }
+  .hero p.lead{ font-size:1.06rem; }
+  .tl-item{ flex-direction:column; gap:6px; }
   .tl-when{ flex-basis:auto; }
+  header.site .wrap{ padding:14px 20px; }
+}
+
+/* ---- print: fold the dark theme back to clean paper ---- */
+@media print{
+  html, body{ background:#fff !important; color:#000 !important; font-size:11.5pt; }
+  header.site, footer.site, .hero-actions, .no-print{ display:none !important; }
+  .hero{ background:#fff !important; border-bottom:1.5px solid #000; padding:0 0 16px; overflow:visible; }
+  .hero::before, .hero::after, h2.h::after{ display:none !important; }
+  .hero h1{ color:#000 !important; font-size:20pt; }
+  .eyebrow{ color:#000 !important; border-color:#000 !important; }
+  .hero p.lead, .tl-what p, .card p, .mapcard .cap p, .notice, td{ color:#000 !important; }
+  a{ color:#000 !important; text-decoration:none !important; }
+  main{ padding:16px 0 0; }
+  section.block{ margin-bottom:22px; page-break-inside:avoid; }
+  h2.h, h3.h{ color:#000 !important; border-color:#000 !important; }
+  .card, .mapcard, .callout, .notice, .tblwrap{ border:1px solid #000 !important; background:#fff !important; border-radius:0 !important; }
+  .callout{ border-left:3px solid #000 !important; }
+  .callout .lab, .tl-when, .card a, .mapcard .cap .tag, h4{ color:#000 !important; }
+  th{ background:#fff !important; color:#000 !important; border-bottom:1.5px solid #000 !important; }
+  th, td{ border-color:#000 !important; }
+  ul.checklist li{ border-color:#000 !important; color:#000 !important; }
+  ul.checklist li::before{ border-color:#000 !important; }
 }
