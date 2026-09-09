@@ -1,42 +1,50 @@
 #!/usr/bin/env python3
 """
-Generate the QR code that goes on the book's back-matter page and title
-page, pointing at this site.
+Generate the QR codes for the book:
 
-The book (see book.html, "Your Bonus Pack" and "About Noel Veylan"
-sections) currently has the address hard-coded as a placeholder:
-"[your site]/alaska". Before this repo goes live:
+  * qr-code.png        -> the bonus pack home page (back-matter + title page)
+  * qr-review.png      -> the review redirect page (/review), which bounces
+                          the reader to the book's Amazon review form. The
+                          Amazon ASIN is NOT baked into this QR code -- it
+                          lives in review.html and can be changed any time
+                          without reprinting anything.
 
-  1. Decide the real URL (e.g. GitHub Pages: https://<you>.github.io/<repo>/,
-     or a custom domain via Pages).
-  2. Update SITE_URL below and re-run this script.
-  3. Find-and-replace "https://YOUR-USERNAME.github.io/alaska-bonus-pack/"
-     across bonus-site/*.html and book.html/manuscript with the real URL.
-  4. Re-run this script to regenerate assets/img/qr-code.png, then rebuild
-     the print PDF (python3 build.py) so the printed QR code is correct.
-     Test the printed code at 6x9 size and at 1 inch minimum before print,
-     per the note already in the book's back matter.
+Before the real launch:
+  1. Set SITE_URL below to the deployed domain.
+  2. Re-run this script to regenerate both PNGs.
+  3. Rebuild the print PDF so the printed codes are current, and test each
+     one at 1 inch minimum before sending to print.
 
-Requires: pip install qrcode[pil]
+Requires: pip install "qrcode[pil]"
 """
 import os
 import qrcode
 
-# ---- change this before the real launch ----
-SITE_URL = "https://YOUR-USERNAME.github.io/alaska-bonus-pack/"
+# ---- set this before the real launch ----
+SITE_URL   = "https://alaska1.vercel.app/"
+REVIEW_URL = SITE_URL.rstrip("/") + "/review"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(os.path.dirname(HERE), "assets", "img", "qr-code.png")
-os.makedirs(os.path.dirname(OUT), exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(HERE), "assets", "img")
+os.makedirs(IMG_DIR, exist_ok=True)
 
-qr = qrcode.QRCode(
-    error_correction=qrcode.constants.ERROR_CORRECT_M,  # tolerant of print wear
-    box_size=20,
-    border=4,
-)
-qr.add_data(SITE_URL)
-qr.make(fit=True)
-img = qr.make_image(fill_color="#141414", back_color="#F7F3EA")
-img.save(OUT)
-print(f"wrote {OUT}  ({img.size[0]}x{img.size[1]}px)  ->  {SITE_URL}")
-print("PLACEHOLDER URL" if "YOUR-USERNAME" in SITE_URL else "")
+TARGETS = {
+    "qr-code.png":   SITE_URL,
+    "qr-review.png": REVIEW_URL,
+}
+
+for filename, url in TARGETS.items():
+    qr = qrcode.QRCode(
+        error_correction=qrcode.constants.ERROR_CORRECT_M,  # tolerant of print wear
+        box_size=20,
+        border=4,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="#0a1b29", back_color="#f5f1e6")
+    out = os.path.join(IMG_DIR, filename)
+    img.save(out)
+    print(f"wrote {out}  ({img.size[0]}x{img.size[1]}px)  ->  {url}")
+
+if "YOUR-" in SITE_URL or "example" in SITE_URL:
+    print("WARNING: SITE_URL still looks like a placeholder")

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Leave a Review — Alaska by Land &amp; Sea 2027</title>
+<meta name="description" content="Go straight to the Amazon review page for Alaska by Land & Sea 2027.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a1b29%22/><text x=%2250%22 y=%2272%22 font-size=%2264%22 font-weight=%22900%22 text-anchor=%22middle%22 fill=%22%23e7a325%22 font-family=%22Archivo,Arial,sans-serif%22>A</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* review interstitial — centred single card */
+  body{ min-height:100vh; display:flex; flex-direction:column; }
+  .redirect{ flex:1; display:flex; align-items:center; justify-content:center; padding:48px 0; }
+  .redirect .wrap{ max-width:560px; text-align:center; }
+  .redirect .eyebrow{ margin-bottom:22px; }
+  .redirect h1{ font-family:'Archivo',system-ui,sans-serif; font-weight:900; color:var(--cream);
+    font-size:2rem; line-height:1.1; letter-spacing:-.01em; margin:0 0 14px; }
+  .redirect p{ color:var(--text); font-size:1.08rem; margin:0 auto 10px; max-width:46ch; }
+  .redirect .actions{ margin:26px 0 0; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .redirect .fine{ margin-top:22px; font-size:.86rem; color:var(--text-dim); }
+  .redirect .fine a{ color:var(--gold-bright); }
+  .spin{ display:inline-block; width:16px; height:16px; margin-right:8px; vertical-align:-2px;
+    border:2px solid rgba(231,163,37,.3); border-top-color:var(--gold); border-radius:50%;
+    animation:spin .8s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  [hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">Alaska by Land &amp; Sea<small>2027 Bonus Pack &middot; Noel Veylan</small></a>
+    <nav class="site">
+      <a href="/">Home</a>
+      <a href="/maps">Maps</a>
+      <a href="/calendar">Booking Calendar</a>
+      <a href="/budget">Budget</a>
+      <a href="/packing">Packing</a>
+      <a href="/links">Official Links</a>
+      <a href="/updates">Updates</a>
+    </nav>
+  </div>
+</header>
+
+<main class="redirect">
+  <div class="wrap">
+
+    <!-- shown when the listing is live -->
+    <div id="state-live" hidden>
+      <span class="eyebrow">Thank you</span>
+      <h1>Taking you to the review page</h1>
+      <p id="live-msg"><span class="spin" aria-hidden="true"></span>Opening Amazon&hellip;</p>
+      <div class="actions">
+        <a class="btn solid" id="review-link" href="#" rel="noopener">Leave a review on Amazon</a>
+        <a class="btn" id="product-link" href="#" rel="noopener">Open the book&rsquo;s Amazon page</a>
+      </div>
+      <p class="fine">Nothing happening? Tap the button above, or search Amazon for
+        <strong>Alaska by Land &amp; Sea &mdash; Noel Veylan</strong>.</p>
+    </div>
+
+    <!-- shown before launch, or if the ASIN hasn't been set yet -->
+    <div id="state-pending" hidden>
+      <span class="eyebrow">Almost there</span>
+      <h1>Reviews aren&rsquo;t open yet</h1>
+      <p>The 2027 edition is brand new. The moment the Amazon listing goes live, this same link
+        will take you straight to the review form &mdash; nothing to re-scan.</p>
+      <p>In the meantime, the bonus pack is all here for you:</p>
+      <div class="actions">
+        <a class="btn solid" href="/">Open the bonus pack</a>
+        <a class="btn" href="/updates">Check for updates</a>
+      </div>
+      <p class="fine">Have the book and it&rsquo;s been a while since launch? The listing may have moved &mdash;
+        search Amazon for <strong>Alaska by Land &amp; Sea &mdash; Noel Veylan</strong>.</p>
+    </div>
+
+    <noscript>
+      <span class="eyebrow">Leave a review</span>
+      <h1>Find the book on Amazon</h1>
+      <p>Search Amazon for <strong>Alaska by Land &amp; Sea &mdash; Noel Veylan</strong> and leave a
+        review on the book&rsquo;s page. (Turning on JavaScript lets this page take you there directly.)</p>
+    </noscript>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap"><p>&copy; Noel Veylan. Alaska by Land &amp; Sea, 2027 Edition. A review helps the next planner find the book.</p></div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------
+   Review redirect — edit this block only.
+   asin   : the book's 10-character Amazon ASIN (Kindle or paperback).
+   live   : set to true once that listing is actually purchasable.
+   domain : the Amazon marketplace to send readers to.
+   ------------------------------------------------------------------ */
+var REVIEW = {
+  asin:   "",
+  live:   false,
+  domain: "www.amazon.com",
+  delayMs: 1600
+};
+
+(function () {
+  var stay = /[?&](stay|debug)\b/.test(location.search);
+  var asin = (REVIEW.asin || "").trim().toUpperCase();
+  var valid = REVIEW.live && /^[A-Z0-9]{10}$/.test(asin);
+
+  var pending = document.getElementById("state-pending");
+  var liveBox = document.getElementById("state-live");
+
+  if (!valid) {
+    pending.hidden = false;
+    return;
+  }
+
+  var base       = "https://" + REVIEW.domain;
+  var reviewUrl  = base + "/review/create-review/?asin=" + asin;
+  var productUrl = base + "/dp/" + asin;
+
+  document.getElementById("review-link").href  = reviewUrl;
+  document.getElementById("product-link").href = productUrl;
+  liveBox.hidden = false;
+
+  if (stay) {
+    document.getElementById("live-msg").textContent =
+      "Preview mode — auto-redirect is off. Use the buttons below.";
+    return;
+  }
+
+  setTimeout(function () {
+    window.location.replace(reviewUrl);
+    /* if the browser is still here a moment later, the redirect was blocked —
+       fall back to the product page, which never requires a sign-in */
+    setTimeout(function () {
+      document.getElementById("live-msg").innerHTML =
+        "Amazon didn&rsquo;t open automatically &mdash; tap a button below.";
+    }, 2500);
+  }, REVIEW.delayMs);
+})();
+</script>
+
+</body>
+</html>
